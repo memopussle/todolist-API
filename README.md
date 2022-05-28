@@ -29,3 +29,6 @@ IV. Use method POST to create new task
 - make POST request
 - new content will be displayed in task { }. 
 
+V. Display the new task
+
+- make a GET request and get all the tasks once again and show them on the page. -> we always get the lastest data

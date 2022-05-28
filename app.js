@@ -14,22 +14,23 @@ console.log("js is working today");
 //error: the callback function to be called if the request failed
 
 $(document).ready(function () {
-  $.ajax({
-    type: "GET",
-    url: "https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=1",
-    dataType: "json",
-    success: function (response, textStatus) {
-      //   forEach: iterate through each individual tasks of response.tasks
-      response.tasks.forEach(function (task) {
-        //append task into HTML
-        $("#todo-list").append("<p>" + task.content + "</p>");
-      });
-    },
-
-    error: function (request, textStatus, errorMessage) {
-      console.log(errorMessage);
-    },
-  }); // see the response logged in the console. an object containing a list of tasks
+  //create a function containing GET request to display all the tasks on the page
+  const getAndDisplayAllTasks = function () {
+    $.ajax({
+      type: "GET",
+      url: "https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=377",
+      dataType: "json",
+      success: function (response, textStatus) {
+        $("#todo-list").empty(); //clear out all existing tasks in HTML
+        response.tasks.forEach(function (task) {
+          $("#todo-list").append("<p>" + task.content + "</p>");
+        });
+      },
+      error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+      },
+    }); // see the response logged in the console. an object containing a list of tasks
+  };
 
   //type : "POST" : make a POST request . create a new task
   //contentType:let server know we are sending json data
@@ -37,7 +38,7 @@ $(document).ready(function () {
   const createTask = () => {
     $.ajax({
       type: "POST",
-      url: "https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=375",
+      url: "https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=377",
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({
@@ -46,8 +47,9 @@ $(document).ready(function () {
           content: $("#new-task-content").val(),
         },
       }),
-      success: function (response, textStatus) {
-        console.log(response);
+        success: function (response, textStatus) {
+       $("#new-task-content").val(""); //clear out the input after a new task is pushed to HTML
+        getAndDisplayAllTasks();
       },
       error: function (request, textStatus, errorMessage) {
         console.log(errorMessage);
@@ -61,4 +63,7 @@ $(document).ready(function () {
     e.preventDefault();
     createTask();
   });
+
+  //call getAndDisplayAllTasks function after a task is created
+  getAndDisplayAllTasks();
 });
