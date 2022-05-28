@@ -36,3 +36,8 @@ V. Display the new task
 - store the first ajax GET reuqest in a function and call that function at the end in order to push it to HTML after a new task is created
 
 VI. Remove a task
+
+
+VII. Mark a task as complete using PUT request
+
+VIII. Mark a task as active

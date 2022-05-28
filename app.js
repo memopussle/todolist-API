@@ -23,14 +23,19 @@ $(document).ready(function () {
       success: function (response, textStatus) {
         $("#todo-list").empty(); //clear out all existing tasks in HTML
         //append task content and delete button in HTML
-          //attribute data-id = task.id: task ID of each task
-          response.tasks.forEach(function (task) {
+        //attribute data-id = task.id: task ID of each task
+          //input checkbox: to tick when the task is completed
+        response.tasks.forEach(function (task) {
           $("#todo-list").append(
             '<div class="row"><p class="col-xs-8">' +
               task.content +
               '</p><button class="delete" data-id="' +
               task.id +
-              '">Delete</button>'
+              '">Delete</button><input type="checkbox" class="mark-complete" data-id="' +
+              task.id +
+              '"' +
+              (task.completed ? "checked" : "") +
+              ">"
           );
         });
       },
@@ -73,24 +78,50 @@ $(document).ready(function () {
   });
 
   //REMOVE task using delete request
-    //id is task.id of each task
- const deleteTask = id => {
+  //id is task.id of each task
+  const deleteTask = (id) => {
+    $.ajax({
+      type: "DELETE",
+      url:
+        "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +
+        id +
+        "?api_key=377",
+      success: function (response, textStatus) {
+        getAndDisplayAllTasks();
+      },
+      error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+      },
+    });
+  };
+  //link deleteTask to all delete buttons
+  //because our tasks are dynamically added to the DOM, we cannot add event listeners to the delete buttons themselves
+  $(document).on("click", ".delete", function () {
+    //this: refer to delete button that fire click event
+    deleteTask($(this).data("id"));
+  });
+
+ const markTaskComplete = id =>{
    $.ajax({
-     type: "DELETE",
-     url: "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +id + "?api_key=377",
+     type: "PUT",
+     url: "https://altcademy-to-do-list-api.herokuapp.com/tasks/" + id + "/mark_complete?api_key=377",
+     dataType: "json",
      success: function (response, textStatus) {
-       console.log(response);
+          getAndDisplayAllTasks();
      },
      error: function (request, textStatus, errorMessage) {
        console.log(errorMessage);
      },
    });
-    }
-    //link deleteTask to all delete buttons
-    //because our tasks are dynamically added to the DOM, we cannot add event listeners to the delete buttons themselves
-    $(document).on('click', '.delete', function () {
-        //this: refer
-        deleteTask($(this).data('id'));
+    } 
+    
+    //link checkbox to markTaskComplete function
+    $(document).on("change", ".mark-complete", function () {
+        //this: refer to checkbox input
+        //if task is checked
+        if (this.checked) {
+          markTaskComplete($(this).data("id"));
+        }
     })
 
   //call getAndDisplayAllTasks function after a task is created
