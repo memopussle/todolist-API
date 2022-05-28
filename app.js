@@ -22,8 +22,16 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response, textStatus) {
         $("#todo-list").empty(); //clear out all existing tasks in HTML
-        response.tasks.forEach(function (task) {
-          $("#todo-list").append("<p>" + task.content + "</p>");
+        //append task content and delete button in HTML
+          //attribute data-id = task.id: task ID of each task
+          response.tasks.forEach(function (task) {
+          $("#todo-list").append(
+            '<div class="row"><p class="col-xs-8">' +
+              task.content +
+              '</p><button class="delete" data-id="' +
+              task.id +
+              '">Delete</button>'
+          );
         });
       },
       error: function (request, textStatus, errorMessage) {
@@ -47,8 +55,8 @@ $(document).ready(function () {
           content: $("#new-task-content").val(),
         },
       }),
-        success: function (response, textStatus) {
-       $("#new-task-content").val(""); //clear out the input after a new task is pushed to HTML
+      success: function (response, textStatus) {
+        $("#new-task-content").val(""); //clear out the input after a new task is pushed to HTML
         getAndDisplayAllTasks();
       },
       error: function (request, textStatus, errorMessage) {
@@ -63,6 +71,27 @@ $(document).ready(function () {
     e.preventDefault();
     createTask();
   });
+
+  //REMOVE task using delete request
+    //id is task.id of each task
+ const deleteTask = id => {
+   $.ajax({
+     type: "DELETE",
+     url: "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +id + "?api_key=377",
+     success: function (response, textStatus) {
+       console.log(response);
+     },
+     error: function (request, textStatus, errorMessage) {
+       console.log(errorMessage);
+     },
+   });
+    }
+    //link deleteTask to all delete buttons
+    //because our tasks are dynamically added to the DOM, we cannot add event listeners to the delete buttons themselves
+    $(document).on('click', '.delete', function () {
+        //this: refer
+        deleteTask($(this).data('id'));
+    })
 
   //call getAndDisplayAllTasks function after a task is created
   getAndDisplayAllTasks();

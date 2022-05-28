@@ -31,4 +31,8 @@ IV. Use method POST to create new task
 
 V. Display the new task
 
-- make a GET request and get all the tasks once again and show them on the page. -> we always get the lastest data
+- make a GET request and get all the tasks once again and show them on the page. By this way, we always get the lastest data
+
+- store the first ajax GET reuqest in a function and call that function at the end in order to push it to HTML after a new task is created
+
+VI. Remove a task
