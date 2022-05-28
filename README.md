@@ -19,3 +19,13 @@ I. Connecting to the API server
 II. Injecting tasks into the DOM
 - Create a div after h2 for housing our to do list. 
 - P/s: JavaScript are run based on their order in the HTML file. App.js iis in <head>, therefore, it will run <script> first. Solution: wrap JS code in a jQuery ready function, so our programs only execute when HTML file is ready.
+- inject tasks to <p> and then append and concatenate the content of each task with HTML string
+
+III. Checking if API is working by using GET request
+- make GET request
+-inject default task content from DOM to HTML to make sure it's working
+
+IV. Use method POST to create new task
+- make POST request
+- new content will be displayed in task { }. 
+
