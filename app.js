@@ -27,16 +27,16 @@ $(document).ready(function () {
           //input checkbox: to tick when the task is completed
         response.tasks.forEach(function (task) {
           $("#todo-list").append(
-            '<div class="row"><p class="col-xs-8">' +
+            '<div class="row"><p class="col-9">' +
               task.content +
-              '</p><button class="delete" data-id="' +
+              '</p><button class="delete m-2 btn btn-success rounded-pill" data-id="' +
               task.id +
               '">Delete</button><input type="checkbox" class="mark-complete" data-id="' +
               task.id +
               '"' +
               (task.completed ? "checked" : "") +
               ">"
-          );
+            );
         });
       },
       error: function (request, textStatus, errorMessage) {
@@ -120,10 +120,41 @@ $(document).ready(function () {
         //this: refer to checkbox input
         //if task is checked
         if (this.checked) {
-          markTaskComplete($(this).data("id"));
+            markTaskComplete($(this).data("id"));
+        }
+    });
+
+    //Mark a task as active
+
+var markTaskActive = function (id) {
+  $.ajax({
+    type: "PUT",
+
+    url:
+      "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +
+      id +
+      "/mark_active?api_key=377",
+
+    dataType: "json",
+
+    success: function (response, textStatus) {
+      getAndDisplayAllTasks();
+    },
+
+    error: function (request, textStatus, errorMessage) {
+      console.log(errorMessage);
+    },
+  });
+    };
+    
+    $(document).on('change', '.mark-complete', function () {
+        if (this.checked) {
+            markTaskComplete($(this).data('id'));
+        } else {
+            markTaskActive($(this).data('id'));
         }
     })
-
   //call getAndDisplayAllTasks function after a task is created
-  getAndDisplayAllTasks();
+    getAndDisplayAllTasks();
+    
 });
