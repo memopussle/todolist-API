@@ -7,3 +7,9 @@ Make requests to ATDAPI: https://altcademy-to-do-list-api.herokuapp.com/
 
 
 ### Minimum requirements to fullfill
+1. A list of tasks rendered in DOM based on data from the ATDAPI server
+
+2. Each task has a description, a remove button, and mark complete/active button
+
+3. An input element and a button that lets user add a new task
+
