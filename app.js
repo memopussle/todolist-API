@@ -13,15 +13,18 @@ console.log("js is working today");
 //sucess : the callback function to be called if the request succeeds
 //error: the callback function to be called if the request failed
 
-$.ajax({
+$(document).ready(function () {
+  console.log("dom ready");
+
+  $.ajax({
     type: "GET",
-    url: 'https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=1',
-    dataType: 'json',
+    url: "https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=1",
+    dataType: "json",
     success: function (response, textStatus) {
-        console.log(response);
+      console.log(response);
     },
     error: function (request, textStatus, errorMessage) {
-        console.log(errorMessage);
-    }
-    
-}); // see the response logged in the console. an object containing a list of tasks
+      console.log(errorMessage);
+    },
+  }); // see the response logged in the console. an object containing a list of tasks
+});

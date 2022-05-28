@@ -17,3 +17,5 @@ Make requests to ATDAPI: https://altcademy-to-do-list-api.herokuapp.com/
 I. Connecting to the API server
 
 II. Injecting tasks into the DOM
+- Create a div after h2 for housing our to do list. 
+- P/s: JavaScript are run based on their order in the HTML file. App.js iis in <head>, therefore, it will run <script> first. Solution: wrap JS code in a jQuery ready function, so our programs only execute when HTML file is ready.
