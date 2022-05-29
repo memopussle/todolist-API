@@ -122,6 +122,7 @@ $(document).ready(function () {
     deleteTask($(this).data("id"));
   });
 
+  //mark the task as completed
   const markTaskComplete = (id) => {
     $.ajax({
       type: "PUT",
@@ -181,6 +182,4 @@ $(document).ready(function () {
 
   //call getAndDisplayAllTasks function after a task is created
   getAndDisplayAllTasks();
-
-  //mark the task as completed
 });

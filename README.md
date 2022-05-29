@@ -1,4 +1,4 @@
-## **To Do List Assignment**
+## **To Do List Assignment - Altcademy**
 A To Do list web application that is connected to the ATDAPI service. 
 
 It will have persistent data so that every time you visit the page, the list of tasks is the same as you left it. 
