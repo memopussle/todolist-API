@@ -25,31 +25,30 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-12">
-          <h2>To Do List</h2>
-          <!-- div for list -->
-          <div id="todo-list">
-              
-          </div>
-          <form id="create-task">
-            <input
-              type="text"
-              id="new-task-content"
-              placeholder="new task"
-              required
-            />
-            <button class="btn btn-dark rounded-pill">Create</button>
-          </form>
+            <div class="col-12">
+                <h2>To Do List</h2>
+                <!-- div for list -->
+                <div id="todo-list">
+                    
+                </div>
+                <form id="create-task">
+                    <input
+                    type="text"
+                    id="new-task-content"
+                    placeholder="new task"
+                    required
+                    />
+                    <button class="btn btn-dark rounded-pill">Create</button>
+                </form>
+            </div>
+            <div class="col-12 mt-3 toggle-button">
+                <button class="btn btn-dark rounded-pill all-tasks">All tasks</button>
+                <button class="btn btn-success rounded-pill active-tasks">Active tasks</button>
+                <button class="btn btn-success rounded-pill completed-tasks">Completed tasks</button>
+            </div>
+       
         </div>
-        <div class="col-12 mt-3">
-            <button class="btn btn-dark rounded-pill">All tasks</button>
-            <button class="btn btn-success rounded-pill">Active tasks</button>
-             <button class="btn btn-success rounded-pill">Completed tasks</button>
-        </div>
-        <div class="show-active-tasks">
-            <p>task 1</p>
-        </div>
-      </div>
+
     </div>
   </body>
 </html>

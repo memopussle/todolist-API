@@ -24,7 +24,7 @@ $(document).ready(function () {
         $("#todo-list").empty(); //clear out all existing tasks in HTML
         //append task content and delete button in HTML
         //attribute data-id = task.id: task ID of each task
-          //input checkbox: to tick when the task is completed
+        //input checkbox: to tick when the task is completed
         response.tasks.forEach(function (task) {
           $("#todo-list").append(
             '<div class="row"><p class="col-9">' +
@@ -36,7 +36,28 @@ $(document).ready(function () {
               '"' +
               (task.completed ? "checked" : "") +
               ">"
-            );
+          );
+
+          //////////toggle class
+          const completedTask = $("input[checked]").closest(".row");
+          const activeTask = $("#todo-list input:not([checked])").closest(
+            ".row"
+          );
+
+          $(document).on("click", ".active-tasks", function () {
+            completedTask.hide();
+            activeTask.show();
+          });
+
+          $(document).on("click", ".completed-tasks", function () {
+            activeTask.hide();
+            completedTask.show();
+          });
+
+          $(document).on("click", ".all-tasks", function () {
+            activeTask.show();
+            completedTask.show();
+          });
         });
       },
       error: function (request, textStatus, errorMessage) {
@@ -101,60 +122,65 @@ $(document).ready(function () {
     deleteTask($(this).data("id"));
   });
 
- const markTaskComplete = id =>{
-   $.ajax({
-     type: "PUT",
-     url: "https://altcademy-to-do-list-api.herokuapp.com/tasks/" + id + "/mark_complete?api_key=377",
-     dataType: "json",
-     success: function (response, textStatus) {
-          getAndDisplayAllTasks();
-     },
-     error: function (request, textStatus, errorMessage) {
-       console.log(errorMessage);
-     },
-   });
-    } 
-    
-    //link checkbox to markTaskComplete function
-    $(document).on("change", ".mark-complete", function () {
-        //this: refer to checkbox input
-        //if task is checked
-        if (this.checked) {
-            markTaskComplete($(this).data("id"));
-        }
+  const markTaskComplete = (id) => {
+    $.ajax({
+      type: "PUT",
+      url:
+        "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +
+        id +
+        "/mark_complete?api_key=377",
+      dataType: "json",
+      success: function (response, textStatus) {
+        getAndDisplayAllTasks();
+      },
+      error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+      },
     });
+  };
 
-    //Mark a task as active
-
-var markTaskActive = function (id) {
-  $.ajax({
-    type: "PUT",
-
-    url:
-      "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +
-      id +
-      "/mark_active?api_key=377",
-
-    dataType: "json",
-
-    success: function (response, textStatus) {
-      getAndDisplayAllTasks();
-    },
-
-    error: function (request, textStatus, errorMessage) {
-      console.log(errorMessage);
-    },
+  //link checkbox to markTaskComplete function
+  $(document).on("change", ".mark-complete", function () {
+    //this: refer to checkbox input
+    //if task is checked
+    if (this.checked) {
+      markTaskComplete($(this).data("id"));
+    }
   });
-    };
-    
-    $(document).on('change', '.mark-complete', function () {
-        if (this.checked) {
-            markTaskComplete($(this).data('id'));
-        } else {
-            markTaskActive($(this).data('id'));
-        }
-    })
+
+  //Mark a task as active
+
+  var markTaskActive = function (id) {
+    $.ajax({
+      type: "PUT",
+
+      url:
+        "https://altcademy-to-do-list-api.herokuapp.com/tasks/" +
+        id +
+        "/mark_active?api_key=377",
+
+      dataType: "json",
+
+      success: function (response, textStatus) {
+        getAndDisplayAllTasks();
+      },
+
+      error: function (request, textStatus, errorMessage) {
+        console.log(errorMessage);
+      },
+    });
+  };
+
+  $(document).on("change", ".mark-complete", function () {
+    if (this.checked) {
+      markTaskComplete($(this).data("id"));
+    } else {
+      markTaskActive($(this).data("id"));
+    }
+  });
+
   //call getAndDisplayAllTasks function after a task is created
-    getAndDisplayAllTasks();
-    
+  getAndDisplayAllTasks();
+
+  //mark the task as completed
 });
