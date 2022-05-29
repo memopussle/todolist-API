@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600;1,700&display=swap');
+body {
+    font-family: 'Playfair Display', serif !important;
+    background-image: url(img/background1.jpg);
+
+}
 h2 {
-    font-weight: 600;
     text-align: center;
     padding: 2rem 0;
+
+}
+
+h2, p {
+    color: azure;
 }
 
 .delete {

@@ -36,8 +36,10 @@ V. Display the new task
 - store the first ajax GET reuqest in a function and call that function at the end in order to push it to HTML after a new task is created
 
 VI. Remove a task
-
+- create a new button and link Delete request to each button
 
 VII. Mark a task as complete using PUT request
+- if input is completed, check it and link PUT request to each completed task
 
 VIII. Mark a task as active
+- if the tak is incomplete, we can uncheck it and link PUT request to each incompleted task
